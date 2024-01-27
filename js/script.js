@@ -24,17 +24,20 @@ function setup() {
   strokeJoin(ROUND);
   fill(255, 0, 0);
 
+  document.querySelector(".save-button").addEventListener("click", function() {
+    saveCanvas('Laisse_moi_dormir.jpg');
+  })
+
   
-  drawingContext.shadowBlur = 50;
-  drawingContext.shadowColor = color(255, 255, 0);
 
 }
 
 
 
-
 let nbPoints=100;
 let clicked=0;
+
+document.querySelector(".score").innerHTML = `${clicked} / ${nbPoints}`;
 
 let lastPoint = ["#point0", [50,0]];
 
@@ -44,15 +47,22 @@ function link2points(p1, p2) {
   
   beginShape(LINES);
 
-
-  
+  strokeWeight(5);
   vertex(p1[0], p1[1]); // Last Point
   vertex(p2[0], p2[1]); // Next Point
 
+  endShape();
+
+  beginShape(LINES);
+
+  strokeWeight(2.5);
+  vertex(p1[0]/10, p1[1]); // Last Point
+  vertex(p2[0]/10, p2[1]); // Next Point
+  
+  endShape();
+
   
 
-
-  endShape();
   
 }
 
@@ -60,10 +70,12 @@ function clickOnPoint(nextPoint) {
   allPoints.push(nextPoint);
 
   link2points([lastPoint[1][0]*windowWidth/100, lastPoint[1][1]*windowHeight/100], [nextPoint[1][0]*windowWidth/100, nextPoint[1][1]*windowHeight/100]);
-  // document.querySelector(nextPoint[0]).style.display = "none";
+  document.querySelector(nextPoint[0]).style.display = "none";
 
   lastPoint = nextPoint;
   clicked++;
+
+  document.querySelector(".score").innerHTML = `${clicked} / ${nbPoints}`
 
   console.log(allPoints);
 
@@ -72,25 +84,25 @@ function clickOnPoint(nextPoint) {
 
 function initRandomPoints(n) {
   for (let i=0; i<n; i++) {
-    document.querySelector(".jeu").innerHTML+=(`<span class="point" id="point${i}">⭐</span>`)
+    document.querySelector(".jeu").innerHTML+=(`<span class="point" id="point${i}"><img src="images/star.png"/></span>`)
   }
 
   for (let i=0; i<n; i++) {
-    let x = Math.floor(Math.random() * 100);
-    let y = Math.floor(Math.random() * 1000);
+    let x = Math.floor(Math.random() * 80) + 15 ;
+    let y = Math.floor(Math.random() * 960) + 15;
     document.querySelector(`#point${i}`).addEventListener("click", function() {
       clickOnPoint([`#point${i}`, [x, y]])}
 )
       
     document.querySelector(`#point${i}`).style.top = y+"%";
     
-    document.querySelector(`#point${i}`).style.filter = "brightness('"+y+"%')";
+    document.querySelector(`#point${i}`).style.filter = "invert("+(y/1000+0.4)+")";
 
     document.querySelector(`#point${i}`).style.left = x+"%";
 
     
     gsap.to(`#point${i}`, {
-      rotate: 80,
+      scale: 2,
       duration: 3,
       scrollTrigger: {
           start: "50% center",
@@ -104,9 +116,55 @@ function initRandomPoints(n) {
 initRandomPoints(nbPoints);
 
 
+gsap.to('.titre', {
+  opacity:0,
+  duration: 3,
+  scrollTrigger: {
+      start: "50% center",
+      trigger: '.titre',
+  },
+});
+
+gsap.to('.mise-en-abyme', {
+  opacity:0,
+  duration: 3,
+  scrollTrigger: {
+      start: "50% center",
+      trigger: '.titre',
+  },
+});
 
 
 
 
 function draw() {
 }
+
+
+
+// Timer
+let totalSeconds = 0;
+let timer = document.querySelector(".time");
+
+const timerInterval = setInterval(() => {
+  totalSeconds++;
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  timer.innerText = formattedTime;
+
+  if(clicked===nbPoints) {
+    clearInterval(timerInterval);
+    timer.style.animation = "clignote 1s infinite";
+
+    document.querySelector(".sitting").style.display = "none";
+    document.querySelector(".sleeping").style.display = "block";
+    
+    document.querySelector(".save-button").style.display = "block";
+  }
+
+}, 1000);
+
+

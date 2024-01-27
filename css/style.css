@@ -1,9 +1,37 @@
+@font-face {
+  font-family: LittleKidsHandwritten;
+  src: url("../fonts/LittleKidsHandwritten.otf") format("opentype");
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(122, 122, 122);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffffd4;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
+  background-color: black;
+  height: fit-content;
 }
 
 .jeu {
+  margin: 0;
   width: 100%;
   height: fit-content;
 }
@@ -13,4 +41,107 @@ body {
   cursor: pointer;
   z-index: 10;
   color: black;
+}
+
+.point img {
+  width: 10px;
+}
+
+.titre {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 20%;
+}
+
+.little-screen {
+  scale: 0.1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.sitting {
+  scale: 0.5;
+  position: absolute;
+  top: 950vh;
+  left: 10%;
+  background-image: url(../images/sitting.png);
+  width: 191px;
+  height: 333px;
+  background-position: center left;
+  background-repeat: no-repeat;
+  animation: breathe 2s steps(2) infinite;
+  filter: invert(1);
+}
+
+@keyframes breathe {
+  100% {
+    background-position: -382px;
+  }
+}
+
+.sleeping {
+  scale: 0.5;
+  position: absolute;
+  top: 940vh;
+  left: 3%;
+  background-image: url(../images/sleeping.png);
+  width: 696px;
+  height: 394px;
+  background-position: center left;
+  background-repeat: no-repeat;
+  animation: zzz 4s steps(4) infinite;
+  filter: invert(1);
+
+  display: none;
+}
+
+@keyframes zzz {
+  100% {
+    background-position: -2784px;
+  }
+}
+
+.score,
+.time {
+  position: absolute;
+  color: white;
+  font-family: "LittleKidsHandwritten", cursive;
+}
+
+.score {
+  top: 950vh;
+  left: 50%;
+  font-size: 8vh;
+}
+
+.time {
+  top: 970vh;
+  left: 50%;
+
+  font-size: 6vh;
+}
+
+@keyframes clignote {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.save-button {
+  scale: 0.3;
+  position: absolute;
+  top: 975vh;
+  left: 50%;
+  filter: invert(1);
+  cursor: pointer;
+  display: none;
 }
