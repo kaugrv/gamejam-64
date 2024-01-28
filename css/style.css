@@ -28,6 +28,8 @@ body {
   overflow-x: hidden;
   background-color: black;
   height: fit-content;
+
+  
 }
 
 .jeu {
@@ -144,4 +146,24 @@ body {
   filter: invert(1);
   cursor: pointer;
   display: none;
+}
+
+.window {
+  font-family: "LittleKidsHandwritten", cursive;
+  text-align: right;
+  width: 90vw;
+  height: 95vh;
+  position: fixed;
+  top:0;
+  font-size: 5vh;font-weight: bolder;
+  padding: 10px;
+  margin: 10px;
+
+  box-shadow:  5px 5px 0px 0px #242424, 10px 10px 0px 0px #424242, 15px 15px 0px 0px #979797, 20px 20px 0px 0px #d1d1d1, 25px 25px 0px 0px #e1e1e1, 0px 0px 0px 50px rgba(255, 255, 255, 0); 
+  
+  border: solid 10px rgb(36, 36, 36);
+
+  transform: rotate(2deg);
+
+  
 }

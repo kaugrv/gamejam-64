@@ -88,7 +88,7 @@ function initRandomPoints(n) {
   }
 
   for (let i=0; i<n; i++) {
-    let x = Math.floor(Math.random() * 80) + 15 ;
+    let x = Math.floor(Math.random() * 80) + 10 ;
     let y = Math.floor(Math.random() * 960) + 15;
     document.querySelector(`#point${i}`).addEventListener("click", function() {
       clickOnPoint([`#point${i}`, [x, y]])}
@@ -123,11 +123,12 @@ gsap.to('.titre', {
       start: "50% center",
       trigger: '.titre',
   },
+  delay:2
 });
 
-gsap.to('.mise-en-abyme', {
+gsap.to('.window', {
   opacity:0,
-  duration: 3,
+  duration: 2,
   scrollTrigger: {
       start: "50% center",
       trigger: '.titre',
